@@ -17,3 +17,6 @@ yarn.lock
 package-lock.json
 
 .env
+
+google-services.json
+GoogleService-Info.plist
