@@ -1,9 +1,9 @@
-import { db } from "../config/firebase";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, onSnapshot } from "firebase/firestore"
+import firestore from '@react-native-firebase/firestore';
+
 
 export async function salvarPost(data){
   try {
-    const result = await addDoc(collection(db, 'posts'), data)
+    const result = await firestore().collection('posts').add(data)
     return result.id
   } catch(error){
     console.log('Erro add post:', error)
@@ -11,24 +11,8 @@ export async function salvarPost(data){
   }
 }
 
-export async function pegarPosts(){
-  try {
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    let posts = []
-    querySnapshot.forEach((doc) => {
-      let post = {id: doc.id, ...doc.data()}
-      posts.push(post)
-    });
-    return posts
-  }catch(error){
-    console.log(error)
-    return []
-  }
-}
-
 export async function pegarPostsTempoReal(setposts){
-  const ref = query(collection(db, "posts"))
-  onSnapshot(ref, (querySnapshot) => {
+  firestore().collection('posts').onSnapshot((querySnapshot) => {
     const posts = []
     querySnapshot.forEach(( doc ) => {
       posts.push({id: doc.id, ...doc.data()})
@@ -39,8 +23,7 @@ export async function pegarPostsTempoReal(setposts){
 
 export async function atualizarPost(postID, data){
   try {
-    const postRef = doc(db, "posts", postID);
-    await updateDoc(postRef, data)
+    await firestore().collection('posts').doc(postID).update(data)
     return 'ok'
   }
   catch(error){
@@ -51,8 +34,7 @@ export async function atualizarPost(postID, data){
 
 export async function deletarPost(postID){
   try {
-    const postRef = doc(db, "posts", postID);
-    await deleteDoc(postRef)
+    await firestore().collection('posts').doc(postID).delete()
     return 'ok'
   }
   catch(error){
