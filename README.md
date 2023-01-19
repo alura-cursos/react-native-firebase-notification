@@ -18,7 +18,7 @@ O SpaceApp é uma aplicação feita em React Native que permite aos usuários en
 Esse projeto é utilizado no curso de Firebase Cloud Messaging da plataforma da Alura.
 
 <h1 align="center">
-    <img alt="Demonstracao" title="Demonstracao" src=".images/demo.gif" width="400px" />
+    <img alt="Demonstracao" title="Demonstracao" src=".images/demo.gif" width="100%" />
 </h1>
 
 ## :rocket: Tecnologias
