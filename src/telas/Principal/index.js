@@ -6,14 +6,38 @@ import { NovoPostBotao } from "../../componentes/NovoPostBotao";
 import { pegarPostsTempoReal } from "../../servicos/firestore";
 import estilos from "./estilos";
 import { logout } from "../../servicos/auth";
-
+import messaging from '@react-native-firebase/messaging';
 
 export default function Principal({ navigation }) {
     const [posts, setPosts] = useState([]);
     const [notifications, setNotifications] = useState([]);
 
+    async function requestUserPermission() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    }
+
+    async function pegarToken(){
+        const token = await messaging().getToken()
+        console.log(token)
+    }
+
     useEffect(() => {
         pegarPostsTempoReal(setPosts);
+
+        requestUserPermission();
+
+        pegarToken()
+
+        messaging().onMessage( async mensagem => {
+            console.log(mensagem)
+        })
     }, [])
 
     function mostrarNotificacoes(){
