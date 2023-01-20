@@ -13,6 +13,11 @@ export async function salvarPost(data){
 
 export async function salvarToken(data){
   try {
+    const tokens = await firestore().collection('tokens').where('userId', '==', data.userId).get()
+    if(tokens.docs.length > 0){
+      await firestore().collection('tokens').doc(tokens.docs[0].id).update(data)
+      return tokens.docs[0].id
+    }
     const result = await firestore().collection('tokens').add(data)
     return result.id
   } catch(error){
