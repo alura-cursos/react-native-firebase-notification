@@ -44,6 +44,11 @@ export default function Principal({ navigation }) {
         messaging().onMessage( async mensagem => {
             console.log(mensagem)
         })
+
+        messaging().setBackgroundMessageHandler( async mensagem => {
+            console.log('Mensagem em background: ', mensagem)
+        })
+
     }, [])
 
     function mostrarNotificacoes(){
