@@ -11,6 +11,16 @@ export async function salvarPost(data){
   }
 }
 
+export async function salvarToken(data){
+  try {
+    const result = await firestore().collection('tokens').add(data)
+    return result.id
+  } catch(error){
+    console.log('Erro ao adicionar token:', error)
+    return 'erro'
+  }
+}
+
 export async function pegarPostsTempoReal(setposts){
   firestore().collection('posts').onSnapshot((querySnapshot) => {
     const posts = []
