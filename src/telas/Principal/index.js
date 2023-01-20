@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Cabecalho } from "../../componentes/Cabecalho";
 import { CartaoInfo } from "../../componentes/CartaoInfo";
 import { NovoPostBotao } from "../../componentes/NovoPostBotao";
-import { pegarPostsTempoReal, salvarToken } from "../../servicos/firestore";
+import { pegarPostsTempoReal, salvarDados } from "../../servicos/firestore";
 import estilos from "./estilos";
 import { logout } from "../../servicos/auth";
 import messaging from '@react-native-firebase/messaging';
@@ -27,7 +27,7 @@ export default function Principal({ navigation }) {
     async function pegarToken(){
         const token = await messaging().getToken()
         const userId = auth.currentUser.uid
-        await salvarToken({
+        await salvarDados('tokens',{
             userId: userId,
             token: token
         })

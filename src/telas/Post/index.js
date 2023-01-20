@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image } from "react-native";
-import { salvarPost, atualizarPost, deletarPost } from "../../servicos/firestore";
+import { salvarDados, atualizarPost, deletarPost } from "../../servicos/firestore";
 import estilos from "./estilos";
 import { entradas } from "./entradas";
 import { alteraDados, escolherImagemDaGaleria, verificarItens } from "../../utils/comum";
@@ -35,7 +35,7 @@ export default function Post({ navigation, route }) {
             return navigation.goBack();
         } 
 
-        const idPost = await salvarPost({
+        const idPost = await salvarDados('posts',{
             ...post,
             imagemUrl: imagem ? '' : null
         });
